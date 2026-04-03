@@ -135,22 +135,30 @@ When answering security questions or searching your personal knowledge, always u
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────┐
-│                lake-of-embeddings               │
-│                                                  │
-│  ┌──────────┐   ┌──────────┐   ┌─────────────┐   │
-│  │Publishers │──▶│  Sync    │──▶│  ChromaDB   │   │
-│  │          │   │  Engine   │   │  (on-disk)  │   │
-│  │• Markdown │   │• Chunking │   │             │   │
-│  │• SQLite   │   │• Hashing  │   │             │   │
-│  │• Plaintext│   │• Diffing  │   │             │   │
-│  └──────────┘   │• Embedding│   └──────┬──────┘   │
-│                  └──────────┘          │          │
-│                  ┌──────────┐          │          │
-│                  │MCP Server │◀─────────┘          │
-│                  │(stdio)    │                     │
-│                  └──────────┘                     │
-└─────────────────────────────────────────────────────┘
+  ┌──────────────────────────────────────────────────────────────────┐
+  │                      lake-of-embeddings                          │                                                                   
+  │                                                                  │
+  │  ┌─────────────┐   ┌──────────────────┐   ┌──────────────────┐   │                                                                    
+  │  │  Publishers │──▶│   Sync Engine    │──▶│    ChromaDB      │   │                                                                    
+  │  │             │   │                  │   │    (on-disk)     │   │                                                                    
+  │  │ • Markdown  │   │ • Chunking       │   │                  │   │                                                                    
+  │  │ • SQLite    │   │ • Content hash   │   │ one collection   │   │                                                                    
+  │  │ • Plaintext │   │   diffing        │   │ per source       │   │                                                                    
+  │  └─────────────┘   │ • Embedding      │   └────────┬─────────┘   │                                                                    
+  │                    │ • ChromaDB upsert│            │             │                                                                    
+  │                    └──────────────────┘            │             │                                                                    
+  │                                                    │             │                                                                  
+  │  ┌─────────────────────┐   ┌──────────────────┐    │             │                                                                     
+  │  │  Embedding Backends │   │   MCP Server     │◀───┘             │                                                                     
+  │  │                     │   │   (stdio)        │                  │                                                                     
+  │  │ • Local             │   │                  │                  │                                                                     
+  │  │   (sentence-        │   │ • semantic_search│                  │                                                                     
+  │  │    transformers)    │   │ • list_sources   │                  │                                                                   
+  │  │ • OpenAI API        │   └──────────────────┘                  │                                                                     
+  │  └─────────────────────┘                                         │                                                                  
+  │                                                                  │                                                                   
+  │  CLI: lake sync | lake serve | lake prune | lake status          │                                                                 
+  └──────────────────────────────────────────────────────────────────┘  
 ```
 
 ## License
