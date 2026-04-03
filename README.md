@@ -1,6 +1,6 @@
 # Lake of Embeddings
 
-Local semantic search over your personal knowledge bases. Index Obsidian notes, SQLite databases, and plaintext files into ChromaDB, exposed to Claude via an MCP server.
+Local semantic search over your personal knowledge bases. Index Obsidian notes, SQLite databases, plaintext, and Notion/Confluence (not supported yet) files into ChromaDB, exposed to Claude via an MCP server.
 
 ## Features
 
