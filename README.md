@@ -93,7 +93,15 @@ lake serve
 
 ## Claude Code Integration
 
-Add to `~/.claude/mcp.json` (user-level, all projects):
+Register as a global MCP server using the Claude Code CLI:
+
+```bash
+claude mcp add -s user lake-of-embeddings $(pwd)/.venv/bin/lake serve
+```
+
+The `-s user` scope makes it available in all sessions. Restart Claude Code after running.
+
+To scope it to a single project instead, add a `.mcp.json` file in the project root:
 
 ```json
 {
@@ -105,8 +113,6 @@ Add to `~/.claude/mcp.json` (user-level, all projects):
   }
 }
 ```
-
-Or add to `.claude/mcp.json` inside a specific project repo to scope it to that project only.
 
 Add to your `CLAUDE.md`:
 
