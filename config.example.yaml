@@ -1,0 +1,17 @@
+sources:
+  - type: markdown
+    name: security-notes
+    path: ~/obsidian-vault/32.01. Security/
+  - type: sqlite
+    name: knowledge-db
+    path: ~/knowledge.db
+    table: notes
+    content_column: body
+    metadata_columns: [title, tags, created_at]
+  - type: plaintext
+    name: misc-notes
+    path: ~/notes/
+
+embedding:
+  backend: local
+  model: all-MiniLM-L6-v2
