@@ -11,7 +11,7 @@ Last updated: 2026-04-09
 - [x] Sync engine — content hash diffing, chunk/embed/upsert, delete stale
 - [x] Chunker — recursive text splitter (~500 tokens, ~50 overlap)
 - [x] MCP server — `semantic_search` and `list_sources` tools (stdio)
-- [x] CLI — `lake sync`, `lake serve`, `lake status`, `lake prune`
+- [x] CLI — `lake sync`, `lake serve`, `lake status`, `lake prune`, `lake search`
 - [x] Tests — unit tests for all modules + integration tests
 - [ ] NotionPublisher
 - [ ] ConfluencePublisher

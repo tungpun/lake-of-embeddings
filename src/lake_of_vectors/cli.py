@@ -139,6 +139,36 @@ def prune(config_path, dry_run):
 
 
 @cli.command()
+@click.argument("query")
+@click.option("--config", "config_path", default=None, help="Path to config.yaml")
+@click.option("--source", default=None, help="Limit search to this source name")
+@click.option("--limit", default=10, show_default=True, help="Number of results")
+def search(query, config_path, source, limit):
+    """Run a semantic search query and print results."""
+    try:
+        cfg_path = Path(config_path) if config_path else default_config_path()
+        config = load_config(cfg_path)
+    except FileNotFoundError:
+        raise click.ClickException(f"Config file not found: {cfg_path}")
+
+    embedder = _make_embedder(config)
+    engine = SyncEngine(chromadb_path=_chromadb_path(), embedder=embedder)
+
+    results = engine.search(query=query, source=source, limit=limit)
+    if not results:
+        click.echo("No results.")
+        return
+
+    for i, r in enumerate(results, 1):
+        meta = r["metadata"]
+        source_name = r["source_name"]
+        title = meta.get("title") or meta.get("source_id", "")
+        score = 1 - r["distance"]
+        click.echo(f"\n[{i}] {source_name} — {title} (score: {score:.3f})")
+        click.echo(r["chunk_text"][:300])
+
+
+@cli.command()
 @click.option("--config", "config_path", default=None, help="Path to config.yaml")
 def status(config_path):
     """Show sync status for all sources."""

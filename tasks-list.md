@@ -20,7 +20,7 @@ Last updated: 2026-04-09
 - [ ] Add ConfluencePublisher — same doc
 - [ ] Add `lake sync --watch` mode for incremental re-sync on file change
 - [ ] Improve chunker to respect Markdown heading boundaries
-- [ ] Add `lake search` CLI command for quick terminal queries (wraps semantic_search without MCP)
+- [x] Add `lake search` CLI command for quick terminal queries (wraps semantic_search without MCP)
 
 ---
 
