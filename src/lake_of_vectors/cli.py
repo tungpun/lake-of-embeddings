@@ -159,13 +159,18 @@ def search(query, config_path, source, limit):
         click.echo("No results.")
         return
 
+    from rich.console import Console
+    from rich.panel import Panel
+    from rich.text import Text
+
+    console = Console()
     for i, r in enumerate(results, 1):
         meta = r["metadata"]
         source_name = r["source_name"]
         title = meta.get("title") or meta.get("source_id", "")
         score = 1 - r["distance"]
-        click.echo(f"\n[{i}] {source_name} — {title} (score: {score:.3f})")
-        click.echo(r["chunk_text"][:300])
+        header = f"[dim][{i}][/dim] [bold]{source_name}[/bold] — {title}  [dim](score: {score:.3f})[/dim]"
+        console.print(Panel(r["chunk_text"][:400], title=header, title_align="left"))
 
 
 @cli.command()
