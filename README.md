@@ -101,6 +101,16 @@ claude mcp add -s user lake-of-vectors $(pwd)/.venv/bin/lake serve
 
 The `-s user` scope makes it available in all sessions. Restart Claude Code after running.
 
+## Qwen Code Integration
+
+Register as a global MCP server using the Qwen Code CLI:
+
+```bash
+qwen mcp add -s user lake-of-vectors $(pwd)/.venv/bin/lake serve
+```
+
+The `-s user` scope makes it available in all sessions. Restart Qwen Code after running.
+
 To scope it to a single project instead, add a `.mcp.json` file in the project root:
 
 ```json
